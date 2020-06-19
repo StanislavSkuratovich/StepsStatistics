@@ -10,8 +10,9 @@ namespace JoggingTrackerCore.Persistance
 {
     public class JoggingTrackerContext : DbContext
     {
-        public DbSet<DayResult> DayResults { get; set; }
-        public DbSet<Customer> Customers { get; set; }
+        public virtual DbSet<DayResult> DayResults { get; set; }
+        public virtual DbSet<Customer> Customers { get; set; }
+        public virtual DbSet<Day> Days { get; set; }
 
         public JoggingTrackerContext()
             : base("name = DefaultConnection")

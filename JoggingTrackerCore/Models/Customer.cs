@@ -8,12 +8,19 @@ using System.Text;
 
 namespace JoggingTrackerCore.Models
 {
-    [DataContract]
+    
     public class Customer
     {
         [Key, DatabaseGenerated(databaseGeneratedOption: DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }        
         public string Name { get; set; }
-        public List<DayResult> DayResults { get; set; }
+        public virtual List<DayResult> DayResults { get; set; }
+
+        public Customer()
+        {
+            DayResults = new List<DayResult>();
+        }
     }
+
+
 }

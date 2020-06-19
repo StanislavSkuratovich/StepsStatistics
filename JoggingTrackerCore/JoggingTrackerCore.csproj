@@ -56,25 +56,20 @@
   <ItemGroup>
     <Compile Include="Controllers\DataProvider.cs" />
     <Compile Include="Controllers\Parcer.cs" />
-    <Compile Include="Migrations\202006151540139_DeleteListCustomersFromCustomer.cs" />
-    <Compile Include="Migrations\202006151540139_DeleteListCustomersFromCustomer.Designer.cs">
-      <DependentUpon>202006151540139_DeleteListCustomersFromCustomer.cs</DependentUpon>
+    <Compile Include="Controllers\ViewModelProvider.cs" />
+    <Compile Include="Migrations\202006181230564_initialCommit.cs" />
+    <Compile Include="Migrations\202006181230564_initialCommit.Designer.cs">
+      <DependentUpon>202006181230564_initialCommit.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202006151924463_CustomerFieldNameWasChanged.cs" />
-    <Compile Include="Migrations\202006151924463_CustomerFieldNameWasChanged.Designer.cs">
-      <DependentUpon>202006151924463_CustomerFieldNameWasChanged.cs</DependentUpon>
+    <Compile Include="Migrations\202006181814416_setVirtualCollectionsInDayAndCustomer.cs" />
+    <Compile Include="Migrations\202006181814416_setVirtualCollectionsInDayAndCustomer.Designer.cs">
+      <DependentUpon>202006181814416_setVirtualCollectionsInDayAndCustomer.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Customer.cs" />
-    <Compile Include="DAL\Interfaces\ICustomerRepository.cs" />
-    <Compile Include="DAL\Interfaces\IDayResultReposiry.cs" />
-    <Compile Include="DAL\IRepository.cs" />
-    <Compile Include="DAL\IUnitOfWork.cs" />
-    <Compile Include="DAL\Repositories\CustomerRepository.cs" />
-    <Compile Include="DAL\Repositories\DayResultRepository.cs" />
-    <Compile Include="DAL\Repositories\Repository.cs" />
-    <Compile Include="DAL\UnitOfWork.cs" />
+    <Compile Include="Models\Day.cs" />
     <Compile Include="Models\DayResult.cs" />
+    <Compile Include="ViewModels\DayResultJson.cs" />
     <Compile Include="Persistance\JoggingTrackerContext.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -90,11 +85,11 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202006151540139_DeleteListCustomersFromCustomer.resx">
-      <DependentUpon>202006151540139_DeleteListCustomersFromCustomer.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202006181230564_initialCommit.resx">
+      <DependentUpon>202006181230564_initialCommit.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202006151924463_CustomerFieldNameWasChanged.resx">
-      <DependentUpon>202006151924463_CustomerFieldNameWasChanged.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202006181814416_setVirtualCollectionsInDayAndCustomer.resx">
+      <DependentUpon>202006181814416_setVirtualCollectionsInDayAndCustomer.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

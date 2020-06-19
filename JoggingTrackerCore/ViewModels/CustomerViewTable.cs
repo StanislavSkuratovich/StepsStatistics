@@ -10,7 +10,7 @@ namespace JoggingTrackerCore.ViewModels
     public class CustomerViewTable
     {
         public Customer Customer { get; set; }
-        public List<DayResult> Results { get; set; }
+        public List<DayResultJson> Results { get; set; }
         public int BestResult { get; set; }
         public int WorstResult { get; set; }
         public int AvgResult { get; set; }

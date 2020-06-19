@@ -1,5 +1,5 @@
 ﻿using JoggingTrackerCore.Models;
-using JoggingTrackerCore.Models.DAL;
+using JoggingTrackerCore.ViewModels;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -13,18 +13,19 @@ namespace JoggingTrackerCore.Controllers
 {
     public class Parcer
     {
-        private readonly string AllNumbersFromString = @"(\d+)(?!.*\d)";        
+        private readonly string AllNumbersFromString = @"(\d+)(?!.*\d)";
+        
         public Parcer()
         {
         }
 
-        public List<DayResult> ParseJsonStringWithDayNumberToDayResults(string jsonString, int dayNumber)
+        public List<DayResultJson> ParseJsonStringWithDayNumberToDayResults(string jsonString, int dayNumber)//todo del
         {
 
-            var dayResults = ConvertJsonStringToClassCollection<DayResult>(jsonString);
-            dayResults.Select(c => { c.Day = dayNumber; return c; }).ToList();
+            var dayResults = ConvertJsonStringToClassCollection<DayResultJson>(jsonString);
+            dayResults.Select(c => { c.Day = dayNumber; return c; }).ToList();//changes day value in a whole collection
             return dayResults;
-        }
+        }       
 
         public int RetrieveNumberFromString(string toParce)
         {
@@ -37,8 +38,8 @@ namespace JoggingTrackerCore.Controllers
         {
             
             byte[] bytes = Encoding.Default.GetBytes(jsonString);
-            string utf8_String = Encoding.UTF8.GetString(bytes);
-            var result = JsonConvert.DeserializeObject<List<T>>(utf8_String);
+            string utf8String = Encoding.UTF8.GetString(bytes);
+            var result = JsonConvert.DeserializeObject<List<T>>(utf8String);
             return result;
         } 
     }

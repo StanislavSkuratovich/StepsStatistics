@@ -17,26 +17,30 @@ using System.Windows.Shapes;
 using JoggingTrackerCore;
 using JoggingTrackerCore.Controllers;
 using JoggingTrackerCore.Models;
-using JoggingTrackerCore.Models.DAL;
-using JoggingTrackerCore.Models.Persistance;
+using JoggingTrackerCore.Persistance;
+using System.Windows.Controls.DataVisualization;
 
 namespace JoggingTrackerView
 {
-    
+
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
+    ///https://stackoverflow.com/questions/46056350/wpf-toolkit-how-to-properly-add-series 
+
     public partial class MainWindow : Window
     {
-        private IUnitOfWork _context;
-        private DataProvider _provider;
-        private JoggingTrackerCore.Controllers.Parcer _parcer; //todo adda interface instead of a class
+        private DataProvider _dataProvider;
+        private ViewModelProvider _modelProvider;
+        private Parcer _parcer; //todo adda interface instead of a class
+        private JoggingTrackerContext _dbContext;
         public MainWindow()
         {
-            InitializeComponent();
-            _context = new UnitOfWork(new JoggingTrackerCore.Persistance.JoggingTrackerContext());//add DI
-            _parcer = new JoggingTrackerCore.Controllers.Parcer();
-            _provider = new JoggingTrackerCore.Controllers.DataProvider();
+            _dbContext = new JoggingTrackerContext();
+            //InitializeComponent();
+            _parcer = new Parcer();
+            _dataProvider = new DataProvider(_dbContext);
+            _modelProvider = new ViewModelProvider(_dbContext);
         }
 
         private void LoadFiles_Click(object sender, RoutedEventArgs e)
@@ -50,22 +54,27 @@ namespace JoggingTrackerView
             bool? fileLoaded = dialog.ShowDialog();
             var filenames = dialog.FileNames.ToList();
             var jsonStrings = LoadJsonStringsWithDay(filenames);
-            foreach (var item in jsonStrings)
-            {
-                //if (_context.DayResults.GetAll().Where(result => result.Day.Equals(item.Item2)).Equals(null))//to do add class day
+            
+            foreach (var item in jsonStrings)//todo move it to controller
+            {            
+                if (_dbContext.Days.Any(i => i.Number == item.Item2) == false)               
                 {
-                    List<DayResult> dayResults = _parcer.ParseJsonStringWithDayNumberToDayResults(item.Item1, item.Item2);
-                    _provider.AddDayResults(dayResults);
-                    //_context.DayResults.Add(dayResults);
-                    //_context.Complete();
-                    
+                    var dayResultsJson = _parcer.ParseJsonStringWithDayNumberToDayResults(item.Item1, item.Item2);
+                    _dataProvider.AddDayResults(dayResultsJson);
+
                 }
-                //else
-                //{
-                //    throw new NotImplementedException();
-                //}
+                else
+                {
+                    throw new NotImplementedException();
+                }
 
             }
+            MessageBox.Show("Data is loaded");
+        }
+
+        private void ClearData_Click(object sender, RoutedEventArgs e)
+        {
+            _dataProvider.ClearData();
         }
 
         private List<(string, int)> LoadJsonStringsWithDay (List<string> patchToFile)
@@ -88,6 +97,12 @@ namespace JoggingTrackerView
                 }                
             }
             return result;
+        }
+
+        private void ClearData_Click_1(object sender, RoutedEventArgs e)
+        {
+            _dataProvider.ClearData();
+            MessageBox.Show("Data is cleaned");
         }
     }
 }
